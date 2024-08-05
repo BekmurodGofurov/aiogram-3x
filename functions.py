@@ -12,3 +12,15 @@ async  def get_user_info(message: Message, bot: Bot):
         await message.answer_photo(user_photos.photos[0][-1].file_id, caption=matn, parse_mode="HTML")
     else:
         await message.answer(matn, parse_mode="HTML")
+
+async def start_answer(message: Message, bot:Bot):
+    await bot.send_message(message.from_user.id, f"Salom {message.from_user.mention_html(f'{message.from_user.first_name}')}", parse_mode="HTML")        
+
+async def help_answer(message: Message, bot: Bot):
+    matn = f"""
+    <b>Bot buyriqlari:</b>
+
+    /start - Botni ishga tushirish
+    /help - Yordam olish!
+"""
+    await bot.send_message(message.from_user.id, matn, parse_mode="HTML")    
