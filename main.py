@@ -1,10 +1,11 @@
+import os
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import BotCommand
 from aiogram.filters import Command
 from asyncio import run
 from dotenv import load_dotenv
 from functions import *
-import os
+from states import sign_up
 
 dp = Dispatcher()
 load_dotenv()
@@ -26,6 +27,9 @@ async def start():
 
     dp.message.register(start_answer, Command("start"))
     dp.message.register(help_answer, Command("help"))
+
+    dp.message.register(sign_up_name, sign_up.name)
+    dp.message.register(sign_up_age, sign_up.age)
 
     dp.message.register(get_user_info)
     dp.shutdown.register(shutdwon_navigation)

@@ -1,5 +1,8 @@
 from aiogram import Bot
 from aiogram.types import Message
+from states import sign_up
+from aiogram.fsm.context import FSMContext
+
 
 async  def get_user_info(message: Message, bot: Bot):
     user = await bot.get_chat(message.from_user.id)
@@ -13,8 +16,11 @@ async  def get_user_info(message: Message, bot: Bot):
     else:
         await message.answer(matn, parse_mode="HTML")
 
-async def start_answer(message: Message, bot:Bot):
-    await bot.send_message(message.from_user.id, f"Salom {message.from_user.mention_html(f'{message.from_user.first_name}')}", parse_mode="HTML")        
+async def start_answer(message: Message, bot:Bot, state: FSMContext):
+    # await bot.send_message(message.from_user.id, f"Salom {message.from_user.mention_html(f'{message.from_user.first_name}')}", parse_mode="HTML")        
+    await message.answer("Salom, Ismingizni yuboring")
+    await state.set_state(sign_up.name)
+
 
 async def help_answer(message: Message, bot: Bot):
     matn = f"""
@@ -24,3 +30,18 @@ async def help_answer(message: Message, bot: Bot):
     /help - Yordam olish!
 """
     await bot.send_message(message.from_user.id, matn, parse_mode="HTML")    
+
+async def sign_up_name(message: Message, bot: Bot, state: FSMContext):
+    await state.update_data(name=message.text)
+    await message.answer(f"Ismingizni oldim {message.text}")
+    await message.answer(f"Yoshingizni yuboring")
+
+    await state.set_state(sign_up.age)
+
+
+async def sign_up_age(message: Message, bot: Bot, state: FSMContext):
+    data = await state.get_data()
+    await message.answer(f"""Ma'lumotlaringiz
+    Ismingiz: {data.get("name")}
+    Yoshingiz: {message.text}""")
+    state.clear
