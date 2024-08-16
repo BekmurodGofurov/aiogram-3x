@@ -1,6 +1,9 @@
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.fsm.context import FSMContext
 
-class sign_up(StatesGroup):
+class newAplication(StatesGroup):
     name=State()
     age=State()
+    phone = State()
+    job = State()
+    goal = State()
+    verify = State()

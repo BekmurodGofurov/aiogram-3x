@@ -5,7 +5,7 @@ from aiogram.filters import Command
 from asyncio import run
 from dotenv import load_dotenv
 from functions import *
-from states import sign_up
+from states import newAplication
 
 dp = Dispatcher()
 load_dotenv()
@@ -25,18 +25,24 @@ async def shutdwon_navigation(bot: Bot):
 async def start():
     dp.startup.register(start_up_navigation)
 
-    dp.message.register(start_answer, Command("start"))
+    dp.message.register(start_command_answer, Command("start"))
     dp.message.register(help_answer, Command("help"))
-
-    dp.message.register(sign_up_name, sign_up.name)
-    dp.message.register(sign_up_age, sign_up.age)
-
-    dp.message.register(get_user_info)
+    dp.message.register(new_answer, Command("new"))
+    dp.message.register(stop_answer, Command("stop"))
+    dp.message.register(newAplication_name_answer, newAplication.name)
+    dp.message.register(newAplication_age_answer, newAplication.age)
+    dp.message.register(newAplication_phone_answer, newAplication.phone)
+    dp.message.register(newAplication_job_answer, newAplication.job)
+    dp.message.register(newAplication_goal_answer, newAplication.goal)
+    dp.message.register(newAplication_verify_answer, newAplication.verify)
+    # dp.message.register(get_user_info)
     dp.shutdown.register(shutdwon_navigation)
 
     bot = Bot(BOT_TOKEN)
     await bot.set_my_commands([
-        BotCommand(command="/start", description="Botni ishga tushirish" ),
+        BotCommand(command="/start", description="Botni ishga tushirish"),
+        BotCommand(command="/new", description="Yangi ariza yuborish"),
+        BotCommand(command="/stop", description="Arizani bekork qilsih"),
         BotCommand(command="/help", description="Yordam olish" ),
     ])
     
