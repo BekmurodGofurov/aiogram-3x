@@ -134,7 +134,7 @@ async def newAplication_verify_answer(message: Message, bot: Bot, state: FSMCont
                 f"ID: {message.from_user.id}\n" 
                 f"Yoshi: {data.get('age')}\n"
                 f"Telefon raqami: {data.get('phone')}\n"
-                f"Username: {message.from_user.username}"
+                f"Username: @{message.from_user.username}\n"
                 f"Kasbi: {data.get('job')}\n"
                 f"Maqsadi: {data.get('goal')}\n")
         await bot.send_message(5841656536, ariza)
