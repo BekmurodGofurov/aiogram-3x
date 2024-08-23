@@ -1,19 +1,12 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton 
 
-reply_button = ReplyKeyboardMarkup(
-    keyboard=[
+main_menu = ReplyKeyboardMarkup(keyboard=[
         [
-            KeyboardButton(text="1 - button"),
-            KeyboardButton(text="2 - button"),
-            KeyboardButton(text="3 - button"),
-        ],
-        [
-            KeyboardButton(text="4 - button"),
-            KeyboardButton(text="5 - button"),
-            KeyboardButton(text="6 - button"),
+            KeyboardButton(text="Refferal havola"),
+            KeyboardButton(text="Mening ballarim"),
         ]
     ], resize_keyboard=True,
-    is_persistent=False, # For not allow to hide button
-    one_time_keyboard=False, #Hide buttons after sent text
-    input_field_placeholder="Bro, Bosing😜"
+    is_persistent=True,
+    one_time_keyboard=True,
+    input_field_placeholder="Main Manu"
 )
