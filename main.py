@@ -4,6 +4,7 @@ from aiogram.filters import CommandStart
 from asyncio import run
 from dotenv import load_dotenv
 from functions import *
+from filters import CheckSubChannel
 
 dp = Dispatcher()
 load_dotenv()
@@ -19,13 +20,12 @@ async def shutdwon_navigation(bot: Bot):
 
 async def start():
   dp.startup.register(start_up_navigation)
-
-  dp.message.register(start_command_reply, CommandStart())
-  dp.message.register(get_contact_info, F.contact)
-  dp.message.register(get_location_info, F.location)
-
   dp.shutdown.register(shutdwon_navigation)
 
+  dp.message.register(sub_channel_answer, CheckSubChannel())
+  dp.message.register(get_channel_id_answer, F.forward_from_chat)
+  dp.message.register(echo)
+
   bot = Bot(BOT_TOKEN)
-  await dp.start_polling(bot)
+  await dp.start_polling(bot, polling_timeout=1)
 run(start())

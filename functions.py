@@ -1,28 +1,12 @@
 from aiogram import Bot
 from aiogram.types import  Message
-from keyboards import  test_for_markup
 
-async def start_command_reply(message: Message):
-  await message.reply(f"Salom {message.from_user.full_name}\nIltimos tugmalardan birini tanlang!", reply_markup=test_for_markup)
+async def get_channel_id_answer(message: Message):
+    await message.answer(f"Kanal ID: {message.forward_from_chat.id}")
 
-async def get_contact_info(message: Message):
-  contact_info = f"""
---------------------
-Ism-Familya: {message.contact.first_name} {message.contact.last_name}\n
---------------------
-User ID: {message.contact.user_id}\n
---------------------
-Telefon raqam: {message.contact.phone_number}\n
---------------------
-"""
-  await message.reply(f"Kontakt qabul qilindi.\n" + contact_info)
-  
-async def get_location_info(message: Message):
-  location_info = f"""
--------------------
-Kenglik: {message.location.latitude}
--------------------
-Uzunlik: {message.location.longitude}
--------------------
-"""
-  await message.reply("Joylashuv qabul qilindi." + location_info)
+async def echo(message: Message):
+    await message.copy_to(message.chat.id)    
+
+async def sub_channel_answer(message: Message):
+    invite_link = "https://t.me/Bekmurod_Gofurov"
+    await message.answer(f"Iltimos kanalga obuna bo'ling!\n\n<a href='{invite_link}'>Link</a>", parse_mode="HTML")    
