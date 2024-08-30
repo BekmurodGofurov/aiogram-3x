@@ -1,11 +1,8 @@
 import os
 from aiogram import Bot, Dispatcher, F
-from aiogram.filters import CommandStart
 from asyncio import run
 from dotenv import load_dotenv
-from functions import *
-from filters import CheckSubChannel
-
+import functions
 dp = Dispatcher()
 load_dotenv()
 
@@ -22,9 +19,7 @@ async def start():
   dp.startup.register(start_up_navigation)
   dp.shutdown.register(shutdwon_navigation)
 
-  dp.message.register(sub_channel_answer, CheckSubChannel())
-  dp.message.register(get_channel_id_answer, F.forward_from_chat)
-  dp.message.register(echo)
+  dp.message.register(functions.echo  )
 
   bot = Bot(BOT_TOKEN)
   await dp.start_polling(bot, polling_timeout=1)

@@ -1,1 +1,0 @@
-CHANNEL_ID = #channel id 
