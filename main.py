@@ -1,26 +1,24 @@
 from aiogram import Bot, Dispatcher, F
+from aiogram.filters import and_f
 from asyncio import run
-
 import functions
-import callback_functions
-
-dp = Dispatcher()
+dp=Dispatcher()
 
 async def startup_answer(bot: Bot):
-    await bot.send_message(chat_id=your id, text="Bot starts working ✅")
+    await bot.send_message(your id, f"Bot is running")
 
 async def shutdown_answer(bot: Bot):
-    await bot.send_message(chat_id=your id, text="Bot stoped working ❌")
+    await bot.send_message(your id, f"bot stoped running")
 
 async def start():
     dp.startup.register(startup_answer)
-    dp.shutdown.register(shutdown_answer)     
+    dp.shutdown.register(shutdown_answer)
 
-    dp.message.register(functions.open_calculator_answer)
-    dp.callback_query.register(callback_functions.math_operation)
+    dp.message.register(functions.new_chat_members_answer, and_f(F.chat.id == -1002233391717, F.new_chat_members))
+    dp.message.register(functions.left_chat_member_answer, and_f(F.chat.id == -1002233391717, F.left_chat_member))
+    dp.message.register(functions.get_info, F.chat.id != -1002233391717)
 
     bot = Bot("Your bot token")
-
     await dp.start_polling(bot, polling_timeout=1)
 
-run(start())    
+run(start())        
