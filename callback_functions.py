@@ -1,13 +1,37 @@
 from aiogram.types import CallbackQuery
 
-async def day(query: CallbackQuery):
-    data =  query.data
-    if data == "null": await query.answer(text="Bu boshliq boshqa oyga tegishli", show_alert=False)
-    if data == "Du": await query.answer(text="Haftaning Duyshanba kunlari", show_alert=False)    
-    if data == "Se": await query.answer(text="Haftaning Seyshanba kunlari", show_alert=False)    
-    if data == "Ch": await query.answer(text="Haftaning Chorshanba kunlari", show_alert=False)    
-    if data == "Pa": await query.answer(text="Haftaning Payshanba kunlari", show_alert=False)    
-    if data == "Ju": await query.answer(text="Haftaning Juma kunlari", show_alert=False)    
-    if data == "Sh": await query.answer(text="Haftaning Shanba kunlari", show_alert=False)    
-    if data == "Ya": await query.answer(text="Haftaning Yakshanba kunlari", show_alert=False)    
-    await query.answer(text=f"{data}-kun bo'yicha ma'lumot yo'q", show_alert=True)
+import keyboards
+
+async def math_operation(callback: CallbackQuery):
+
+
+    if callback.message.text == "|":
+        if callback.data in "DC": await callback.answer(f"❗ O'chirish uchun ifoda mavjud emas!", show_alert=True)
+        elif callback.data in "+-*/=,":
+            await callback.answer(f"❗ Siz ifodani {callback.data} belgisi bilan boshlay olmaysiz", show_alert=True)
+        else:
+            await callback.message.edit_text(callback.data + callback.message.text, reply_markup=keyboards.cal_builder)
+    else:
+        if callback.data == "D":
+            await callback.message.edit_text(callback.message.text[:-2] + "|", reply_markup=keyboards.cal_builder)
+        
+        elif callback.data == "C":
+            await callback.message.edit_text("|", reply_markup=keyboards.cal_builder)
+
+        elif (callback.message.text[-2].isdigit()) and callback.data == "=" and ("+" in callback.message.text or "-" in callback.message.text or "*" in callback.message.text or "/" in callback.message.text):
+            ifoda = callback.message.text.replace(",", ".")
+            await callback.message.edit_text(str(eval(ifoda[:-1])) + "|", reply_markup=keyboards.cal_builder)
+            await callback.answer(f"Ifondaning Javobi: {str(eval(ifoda[:-1]))}", show_alert=True)
+        
+        elif callback.data == "=":
+            await callback.answer("❗ Ifoda to'liq emas!", show_alert=True)
+
+        elif callback.message.text[-2].isdigit() or callback.data.isdigit():
+            await callback.message.edit_text(callback.message.text[:-1] + callback.data + callback.message.text[-1], reply_markup=keyboards.cal_builder)
+        
+        elif callback.data in "+-*/":
+            await callback.message.edit_text(callback.message.text[:-2] + callback.data + "|", reply_markup=keyboards.calc_builder)
+        
+        elif callback.data == ",":
+            await callback.answer("❗Noto'g'ri buyruq!", show_alert=True)
+

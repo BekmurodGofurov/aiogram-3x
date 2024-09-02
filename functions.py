@@ -1,5 +1,5 @@
 from aiogram.types import Message
 import keyboards
 
-async def echo(message: Message):
-    await message.copy_to(message.chat.id, reply_markup=keyboards.inline_builder)
+async def open_calculator_answer(message: Message):
+    await message.reply(text=f"|", reply_markup=keyboards.cal_builder)
